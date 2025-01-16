@@ -113,6 +113,7 @@ DB_NAME=wisefolio
 FIREBASE_PROJECT_ID=your-firebase-project-id
 FIREBASE_PRIVATE_KEY="your-firebase-private-key"
 FIREBASE_CLIENT_EMAIL=your-firebase-client-email
+FIREBASE_API_KEY=your-firebase-api-key
 
 ```
 - npx ts-node scripts/db-init.ts
