@@ -97,3 +97,24 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+
+
+## steps
+- npm install
+- create .env file as following at root file, you can update .env.sample 
+```
+PORT=3000
+DB_HOST=your-database-host
+DB_PORT=your-database-port
+DB_USER=your-database-username
+DB_PASS=your-database-password
+DB_NAME=wisefolio
+FIREBASE_PROJECT_ID=your-firebase-project-id
+FIREBASE_PRIVATE_KEY="your-firebase-private-key"
+FIREBASE_CLIENT_EMAIL=your-firebase-client-email
+FIREBASE_API_KEY=your-firebase-api-key
+
+```
+- npx ts-node scripts/db-init.ts
+- npx knex migrate:latest
