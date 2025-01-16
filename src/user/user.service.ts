@@ -9,13 +9,11 @@ const db = knex(config.development);
 export class UserService {
     // Sign up a new user
     async signUp(email: string, name: string, password: string) {
-        // Create user in Firebase Authentication
         const firebaseUser = await firebaseAuth.createUser({
             email,
             password,
         });
 
-        // Save the user in the MySQL database
         const newUser = {
             id: firebaseUser.uid,
             email,
@@ -28,7 +26,6 @@ export class UserService {
 
     // Login a user
     async login(email: string, password: string): Promise<string> {
-        // Use Firebase REST API to authenticate the user and get an idToken
         const response = await fetch(
             `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.FIREBASE_API_KEY}`,
             {
@@ -57,6 +54,24 @@ export class UserService {
             throw new Error('User not found');
         }
         return user;
+    }
+
+    // Update username and/or password
+    async updateUser(userId: string, newName?: string, newPassword?: string) {
+        if (newPassword) {
+            await firebaseAuth.updateUser(userId, { password: newPassword });
+        }
+
+        if (newName) {
+            await db('users').where({ id: userId }).update({ name: newName, updated_at: new Date() });
+        }
+
+        const updatedUser = await db('users').where({ id: userId }).first();
+        if (!updatedUser) {
+            throw new Error('User not found');
+        }
+
+        return updatedUser;
     }
     
 }

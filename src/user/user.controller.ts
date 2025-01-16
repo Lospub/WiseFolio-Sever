@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Body, Query } from '@nestjs/common';
+import { Controller, Post, Get, Put, Body } from '@nestjs/common';
 import { UserService } from './user.service';
 
 @Controller('users')
@@ -15,8 +15,13 @@ export class UserController {
         return { idToken: await this.userService.login(body.email, body.password) };
     }
 
-    @Get('get-by-email')
-    async getUserByEmail(@Query('email') email: string) {
-        return this.userService.getUserByEmail(email);
+    @Post('get-by-email')
+    async getUserByEmail(@Body() body: { email: string }) {
+        return this.userService.getUserByEmail(body.email);
+    }
+
+    @Put('update')
+    async updateUser(@Body() body: { userId: string; newName?: string; newPassword?: string }) {
+        return this.userService.updateUser(body.userId, body.newName, body.newPassword);
     }
 }
