@@ -6,7 +6,7 @@ export async function up(knex: Knex): Promise<void> {
     await knex.schema.createTable('users', (table) => {
         table.string('id', 36).primary(); 
         table.string('email').notNullable().unique();
-        table.string('name').notNullable();
+        table.string('name').notNullable().unique();
         table.timestamps(true, true); 
     });
 }
