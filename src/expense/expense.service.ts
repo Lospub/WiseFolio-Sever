@@ -20,7 +20,7 @@ export class ExpenseService {
         return newExpense;
     }
 
-    // Get a single expense by ID
+    // Get a expense by ID
     async findOne(id: string): Promise<Expense> {
         const expense = await db('expenses').where({ id }).first();
         if (!expense) {
@@ -35,7 +35,6 @@ export class ExpenseService {
         if (!userExists) {
             throw new Error(`User with ID ${userId} does not exist`);
         }
-
         const expenses = await db('expenses').where({ user_id: userId }).select('*');
         return expenses;
     }
@@ -46,7 +45,6 @@ export class ExpenseService {
         if (!expense) {
             throw new Error(`Expense with ID ${id} not found`);
         }
-
         await db('expenses').where({ id }).update(updates);
         return this.findOne(id);
     }

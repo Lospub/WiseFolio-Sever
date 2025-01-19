@@ -21,7 +21,6 @@ describe('ExpenseController', () => {
                             category: 'Food',
                             date: new Date(),
                         }),
-                        findAllByUserId: jest.fn().mockResolvedValue([]),
                         findOne: jest.fn().mockResolvedValue({
                             id: 'expense-uuid-123',
                             user_id: 'user-uuid-123',
@@ -30,6 +29,16 @@ describe('ExpenseController', () => {
                             category: 'Food',
                             date: new Date(),
                         }),
+                        findAllByUserId: jest.fn().mockResolvedValue([
+                            {
+                                id: 'expense-uuid-123',
+                                user_id: 'user-uuid-123',
+                                description: 'Groceries',
+                                amount: 100,
+                                category: 'Food',
+                                date: new Date(),
+                            },
+                        ]),
                         update: jest.fn().mockResolvedValue({
                             id: 'expense-uuid-123',
                             user_id: 'user-uuid-123',
@@ -105,9 +114,9 @@ describe('ExpenseController', () => {
             },
         ];
 
-        jest.spyOn(service, 'findAllByUserId').mockResolvedValue(mockExpenses);
 
         const result = await controller.findAllByUserId(mockUserId);
+        expect(result).toHaveLength(2);
         expect(result).toEqual(mockExpenses);
         expect(service.findAllByUserId).toHaveBeenCalledWith(mockUserId);
     });
