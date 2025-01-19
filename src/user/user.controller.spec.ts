@@ -28,7 +28,7 @@ describe('UserController', () => {
               id: 'firebase-uid-123',
               email: 'test@example.com',
               name: 'Updated Name',
-            }), // Mock for updateUser
+            }), 
           },
         },
       ],
