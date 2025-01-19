@@ -114,6 +114,7 @@ describe('ExpenseController', () => {
             },
         ];
 
+        jest.spyOn(service, 'findAllByUserId').mockResolvedValue(mockExpenses);
 
         const result = await controller.findAllByUserId(mockUserId);
         expect(result).toHaveLength(2);
