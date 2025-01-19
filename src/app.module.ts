@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { KnexModule } from 'nest-knexjs';
 import { UserModule } from './user/user.module';
 import { ExpenseModule } from './expense/expense.module';
+import { BudgetModule } from './budget/budget.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { ExpenseModule } from './expense/expense.module';
     }),
     UserModule,
     ExpenseModule,
+    BudgetModule,
   ],
   controllers: [AppController],
   providers: [AppService],
