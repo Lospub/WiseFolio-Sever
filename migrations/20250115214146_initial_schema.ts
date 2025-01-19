@@ -15,7 +15,7 @@ export async function up(knex: Knex): Promise<void> {
         table.uuid('id').primary();
         table.uuid('user_id').notNullable();
         table.string("description").notNullable();
-        table.decimal('amount, 10, 2').notNullable();
+        table.decimal('amount', 10, 2).notNullable();
         table.string('category').notNullable();
         table.timestamp('date').notNullable();
         table.timestamps(true, true);
@@ -26,7 +26,8 @@ export async function up(knex: Knex): Promise<void> {
 
 
 export async function down(knex: Knex): Promise<void> {
-    await knex.schema.dropTableIfExists('users');
     await knex.schema.dropTableIfExists('expenses');
+
+    await knex.schema.dropTableIfExists('users');
 }
 
