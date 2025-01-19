@@ -55,6 +55,24 @@ const config: { [key: string]: Knex.Config } = {
       directory: "./migrations",
     },
   },
+  ci: {
+    client: "mysql2",
+    connection: {
+      host: process.env.DB_HOST || "127.0.0.1",
+      port: Number(process.env.DB_PORT) || 3306,
+      user: process.env.DB_USER || "test_user",
+      password: process.env.DB_PASS || "test_password",
+      database: process.env.DB_NAME || "test_db",
+    },
+    pool: {
+      min: 2,
+      max: 10,
+    },
+    migrations: {
+      directory: "./migrations",
+    },
+  },
+  
 };
 
 export default config;
