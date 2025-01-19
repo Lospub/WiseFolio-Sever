@@ -39,11 +39,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'yarn'
+          cache: 'npm'
 
       # Step 3: Install dependencies
       - name: Install Dependencies
-        run: yarn install
+        run: npm ci
 
       # Step 4: Set environment variables
       - name: Set Environment Variables
@@ -59,11 +59,11 @@ jobs:
 
       # Step 5: Run Knex migrations
       - name: Run Knex Migrations
-        run: yarn knex migrate:latest --env ci
+        run: npm run knex -- migrate:latest --env ci
 
       # Step 6: Build the application
       - name: Build Application
-        run: yarn build
+        run: npm run build
 
       # Step 7: Run tests
       - name: Run Tests
@@ -71,4 +71,4 @@ jobs:
           FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
           FIREBASE_CLIENT_EMAIL: ${{ secrets.FIREBASE_CLIENT_EMAIL }}
           FIREBASE_PRIVATE_KEY: ${{ secrets.FIREBASE_PRIVATE_KEY }}
-        run: yarn test
+        run: npm test
