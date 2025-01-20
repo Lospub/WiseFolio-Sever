@@ -45,4 +45,12 @@ export class SavingService {
         return this.findOne(id);
     }
 
+    // Delete a saving goal
+    async remove(id: string): Promise<void> {
+        const saving = await db('savings').where({ id }).first();
+        if (!saving) {
+            throw new Error(`Saving Goal with ID ${id} not found`);
+        }
+        await db('savings').where({ id }).delete();
+    }
 }

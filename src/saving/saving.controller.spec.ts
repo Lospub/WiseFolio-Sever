@@ -43,6 +43,7 @@ describe('SavingController', () => {
               description: 'Updated Emergency Fund',
               end_date: new Date('2025-12-31'),
             }),
+            remove: jest.fn().mockResolvedValue(undefined),
           },
         },
       ],
@@ -130,4 +131,13 @@ describe('SavingController', () => {
     expect(result).toEqual(mockUpdatedSaving);
     expect(service.update).toHaveBeenCalledWith(mockId, updates);
   });
+
+  it('should delete a saving goal', async () => {
+    const mockId = 'saving-uuid-123';
+
+    jest.spyOn(service, 'remove').mockResolvedValue();
+
+    await expect(controller.remove(mockId)).resolves.not.toThrow();
+    expect(service.remove).toHaveBeenCalledWith(mockId);
+});
 });

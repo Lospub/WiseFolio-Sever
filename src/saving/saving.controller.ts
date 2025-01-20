@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { SavingService } from './saving.service';
 import { Saving } from './entities/saving.entity';
 
@@ -27,5 +27,10 @@ export class SavingController {
         @Body() updates: Partial<Omit<Saving, 'id' | 'user_id'>>,
     ): Promise<Saving> {
         return this.savingService.update(id, updates);
+    }
+
+    @Delete(':id')
+    async remove(@Param('id') id: string): Promise<void> {
+        return this.savingService.remove(id);
     }
 }
