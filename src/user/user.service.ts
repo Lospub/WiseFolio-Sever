@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { firebaseAuth } from '../../firebase-admin.config';
 import knex from 'knex';
 import config from '../../knexfile';
@@ -73,5 +73,14 @@ export class UserService {
 
         return updatedUser;
     }
-    
+
+    // decode idToken
+    async decodeIdToken(idToken: string): Promise<string> {
+        try {
+            const decodedToken = await firebaseAuth.verifyIdToken(idToken);
+            return decodedToken.uid;
+        } catch (error) {
+            throw new UnauthorizedException('Invalid or expired token');
+        }
+    }
 }
