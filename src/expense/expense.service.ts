@@ -35,7 +35,11 @@ export class ExpenseService {
         if (!userExists) {
             throw new Error(`User with ID ${userId} does not exist`);
         }
-        const expenses = await db('expenses').where({ user_id: userId }).select('*');
+        // Order expenses by date in descending order
+        const expenses = await db('expenses')
+            .where({ user_id: userId })
+            .orderBy('date', 'desc') 
+            .select('*');
         return expenses;
     }
 
