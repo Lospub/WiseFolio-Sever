@@ -11,7 +11,6 @@ import { ExpenseService } from './expense.service';
 import { Expense } from './entities/expense.entity';
 
 @Controller('expenses')
-@Controller('expenses')
 export class ExpenseController {
     constructor(private readonly expenseService: ExpenseService) { }
 
