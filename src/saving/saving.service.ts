@@ -53,4 +53,18 @@ export class SavingService {
         }
         await db('savings').where({ id }).delete();
     }
+
+    // Calculate total spent for a specific saving goal
+    async calculateSaved(savingId: string): Promise<number> {
+        const saving = await this.findOne(savingId);
+        const { user_id, description, end_date } = saving;
+
+        const totalSpent = await db('expenses')
+            .where('user_id', user_id)
+            .andWhere('category', `Saving Goal: ${description}`)
+            .andWhere('date', '<=', end_date)
+            .sum('amount as total');
+
+        return totalSpent[0].total || 0; 
+    }
 }

@@ -44,6 +44,7 @@ describe('SavingController', () => {
               end_date: new Date('2025-12-31'),
             }),
             remove: jest.fn().mockResolvedValue(undefined),
+            calculateSaved: jest.fn().mockResolvedValue(320),
           },
         },
       ],
@@ -139,5 +140,13 @@ describe('SavingController', () => {
 
     await expect(controller.remove(mockId)).resolves.not.toThrow();
     expect(service.remove).toHaveBeenCalledWith(mockId);
-});
+  });
+
+  it('should calculate the total saving for a saving goal', async () => {
+    const mockId = 'saving-uuid-123';
+
+    const result = await controller.calculateSaved(mockId);
+    expect(result).toHaveProperty('saved', 320);
+    expect(service.calculateSaved).toHaveBeenCalledWith(mockId);
+  });
 });

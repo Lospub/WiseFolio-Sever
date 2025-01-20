@@ -158,5 +158,4 @@ describe('BudgetController', () => {
     expect(result).toHaveProperty('spent', 320);
     expect(service.calculateSpent).toHaveBeenCalledWith(mockId);
   });
-
 });

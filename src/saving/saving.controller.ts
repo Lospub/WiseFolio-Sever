@@ -33,4 +33,10 @@ export class SavingController {
     async remove(@Param('id') id: string): Promise<void> {
         return this.savingService.remove(id);
     }
+
+    @Get(':id/saved')
+    async calculateSaved(@Param('id') id: string): Promise<{ saved: number }> {
+        const saved = await this.savingService.calculateSaved(id);
+        return { saved };
+    }
 }
