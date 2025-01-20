@@ -35,4 +35,14 @@ export class SavingService {
         return await db('savings').where({ user_id: userId }).select('*');
     }
 
+    // Update a saving goal
+    async update(id: string, updates: Partial<Omit<Saving, 'id' | 'user_id'>>): Promise<Saving> {
+        const saving = await db('savings').where({ id }).first();
+        if (!saving) {
+            throw new Error(`Saving Goal with ID ${id} not found`);
+        }
+        await db('savings').where({ id }).update(updates);
+        return this.findOne(id);
+    }
+
 }

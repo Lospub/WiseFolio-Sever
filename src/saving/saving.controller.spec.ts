@@ -36,6 +36,13 @@ describe('SavingController', () => {
                 end_date: new Date('2025-12-31'),
               },
             ]),
+            update: jest.fn().mockResolvedValue({
+              id: 'saving-uuid-123',
+              user_id: 'user-uuid-123',
+              amount: 2500,
+              description: 'Updated Emergency Fund',
+              end_date: new Date('2025-12-31'),
+            }),
           },
         },
       ],
@@ -104,5 +111,23 @@ describe('SavingController', () => {
     expect(result).toHaveLength(2);
     expect(result).toEqual(mockSavings);
     expect(service.findAllByUserId).toHaveBeenCalledWith(mockUserId);
+  });
+
+  it('should update a saving goal', async () => {
+    const mockId = 'saving-uuid-123';
+    const updates = { amount: 2500, description: 'Updated Emergency Fund' };
+    const mockUpdatedSaving = {
+      id: mockId,
+      user_id: 'user-uuid-123',
+      amount: 2000,
+      description: 'UpdatedEmergency Fund',
+      end_date: new Date('2025-12-31'),
+    };
+
+    jest.spyOn(service, 'update').mockResolvedValue(mockUpdatedSaving);
+
+    const result = await controller.update(mockId, updates);
+    expect(result).toEqual(mockUpdatedSaving);
+    expect(service.update).toHaveBeenCalledWith(mockId, updates);
   });
 });
