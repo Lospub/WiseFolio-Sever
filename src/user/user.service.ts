@@ -43,13 +43,13 @@ export class UserService {
         return data.idToken;
     }
 
-    // Get user by email
-    async getUserByEmail(email: string) {
-        if (!email) {
-            throw new Error('Email is required');
+    // Get user by ID
+    async findUserById(userId: string) {
+        if (!userId) {
+            throw new Error('User ID is required');
         }
     
-        const user = await db('users').where({ email }).first();
+        const user = await db('users').where({ id: userId }).first();
         if (!user) {
             throw new Error('User not found');
         }

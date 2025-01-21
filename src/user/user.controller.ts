@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Put, Body, UseGuards } from '@nestjs/common';
+import { Controller, Post, Get, Put, Body, UseGuards, Param } from '@nestjs/common';
 import { UserService } from './user.service';
 import { AuthGuard } from 'src/auth/auth.guard';
 
@@ -16,9 +16,9 @@ export class UserController {
         return { idToken: await this.userService.login(body.email, body.password) };
     }
 
-    @Post('get-by-email')
-    async getUserByEmail(@Body() body: { email: string }) {
-        return this.userService.getUserByEmail(body.email);
+    @Get(':id')
+    async findUserById(@Param('id') id: string) {
+        return this.userService.findUserById(id);
     }
 
     @Put('update')

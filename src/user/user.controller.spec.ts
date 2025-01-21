@@ -19,7 +19,7 @@ describe('UserController', () => {
               name: 'Test User',
             }),
             login: jest.fn().mockResolvedValue('<firebase-id-token>'),
-            getUserByEmail: jest.fn().mockResolvedValue({
+            findUserById: jest.fn().mockResolvedValue({
               id: 'uuid-123',
               email: 'test@example.com',
               name: 'Test User',
@@ -29,6 +29,7 @@ describe('UserController', () => {
               email: 'test@example.com',
               name: 'Updated Name',
             }), 
+            decodeIdToken: jest.fn().mockResolvedValue('decoded-uid-123'),
           },
         },
       ],
@@ -77,18 +78,18 @@ describe('UserController', () => {
     });
   });
 
-  describe('getUserByEmail', () => {
-    it('should return a user by email', async () => {
-      const body = { email: 'test@example.com' };
+  describe('findUserById', () => {
+    it('should return a user by ID', async () => {
+      const userId = 'uuid-123';
 
-      const result = await userController.getUserByEmail(body);
+      const result = await userController.findUserById(userId);
       expect(result).toEqual({
         id: 'uuid-123',
         email: 'test@example.com',
         name: 'Test User',
       });
 
-      expect(userService.getUserByEmail).toHaveBeenCalledWith(body.email);
+      expect(userService.findUserById).toHaveBeenCalledWith(userId);
     });
   });
 
@@ -113,6 +114,16 @@ describe('UserController', () => {
         body.newName,
         body.newPassword,
       );
+    });
+  });
+
+  describe('decodeIdToken', () => {
+    it('should decode an ID token and return the user ID', async () => {
+      const idToken = '<firebase-id-token>';
+
+      const result = await userController.decodeIdToken(idToken);
+      expect(result).toEqual('decoded-uid-123');
+      expect(userService.decodeIdToken).toHaveBeenCalledWith(idToken);
     });
   });
 });
