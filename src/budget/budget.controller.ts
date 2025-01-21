@@ -37,6 +37,6 @@ export class BudgetController {
     @Get(':id/spent')
     async calculateSpent(@Param('id') id: string): Promise<{ spent: number }> {
         const spent = await this.budgetService.calculateSpent(id);
-        return { spent };
+        return { spent: spent };
     }
 }

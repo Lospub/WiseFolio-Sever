@@ -63,8 +63,8 @@ export class BudgetService {
             .where('user_id', user_id)
             .andWhere('category', category)
             .andWhereBetween('date', [start_date, end_date])
-            .sum('spent');
+            .sum('amount');
 
-        return totalSpent[0].total || 0;
+        return totalSpent[0]["sum(`amount`)"] || 0;
     }
 }
