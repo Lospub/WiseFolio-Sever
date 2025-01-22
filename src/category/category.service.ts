@@ -8,16 +8,15 @@ const db = knex(config.development);
 @Injectable()
 export class CategoryService {
     // Create a new category
-    async create(name: string): Promise<Category> {
+    async create(category: { id?: string; name: string }): Promise<Category> {
         // Check if the category already exists
-        const existingCategory = await db('categories').where({ name }).first();
+        const existingCategory = await db('categories').where({ name: category.name }).first();
         if (existingCategory) {
-            throw new Error(`Category "${name}" already exists.`);
+            throw new Error(`Category "${category.name}" already exists.`);
         }
 
-        const id = crypto.randomUUID();
-        const newCategory = { id, name };
-
+        const id = category.id || crypto.randomUUID();
+        const newCategory = { id: id, name: category.name };
         await db('categories').insert(newCategory);
         return newCategory;
     }

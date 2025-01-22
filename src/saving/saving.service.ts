@@ -61,7 +61,7 @@ export class SavingService {
 
         const totalSpent = await db('expenses')
             .where('user_id', user_id)
-            .andWhere('category', description)
+            .andWhere('category', `Saving Goal: ${description}`)
             .andWhere('date', '<=', end_date)
             .sum('amount');
 

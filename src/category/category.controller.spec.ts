@@ -7,9 +7,9 @@ describe('CategoryController', () => {
   let service: CategoryService;
 
   const mockCategoryService = {
-    create: jest.fn((name: string) => ({
-      id: '1',
-      name,
+    create: jest.fn((category: { id?: string; name: string }) => ({
+      id: category.id || '1',
+      name: category.name,
     })),
     findAll: jest.fn(() => [
       { id: '1', name: 'Food' },
@@ -44,10 +44,16 @@ describe('CategoryController', () => {
   });
 
   describe('create', () => {
-    it('should create a category', async () => {
-      const result = await controller.create('Food');
-      expect(result).toEqual({ id: '1', name: 'Food' });
-      expect(service.create).toHaveBeenCalledWith('Food');
+    it('should create a category with a provided ID', async () => {
+      const result = await controller.create({ id: 'custom-id', name: 'Food' });
+      expect(result).toEqual({ id: 'custom-id', name: 'Food' });
+      expect(service.create).toHaveBeenCalledWith({ id: 'custom-id', name: 'Food' });
+    });
+
+    it('should create a category without a provided ID', async () => {
+      const result = await controller.create({ name: 'Transport' });
+      expect(result).toEqual({ id: '1', name: 'Transport' });
+      expect(service.create).toHaveBeenCalledWith({ name: 'Transport' });
     });
   });
 
