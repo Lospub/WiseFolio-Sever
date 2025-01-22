@@ -6,6 +6,7 @@ import { UserModule } from './user/user.module';
 import { ExpenseModule } from './expense/expense.module';
 import { BudgetModule } from './budget/budget.module';
 import { SavingModule } from './saving/saving.module';
+import { CategoryModule } from './category/category.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { SavingModule } from './saving/saving.module';
     ExpenseModule,
     BudgetModule,
     SavingModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
